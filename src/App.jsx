@@ -1,4 +1,4 @@
-//! Esercizio
+//! Giorno 1
 /* 
 Creare un semplice form con un campo input per il titolo di un articolo del blog.
 
@@ -11,7 +11,8 @@ BONUS
     Implementare la funzionalità di modifica del titolo di un post.
     Aggiungere più campi al form (ad es. lo stato di un articolo - draft, published - o l’autore) */
 
-//! Esercizio
+//! Giorno 2
+
 /* Ampliare l'esercizio precedente aggiungendo, nel form, i campi per immagine, contenuto,
 categoria (select) e uno stato per pubblicare o meno l'articolo. 
 
@@ -28,39 +29,95 @@ import "./App.css";
 
 function App() {
   /* Uso lo use state per settare l'input  */
-  const [titleArticle, setTitleArticle] = useState("");
-
-  /* Creo l'array vuoto  */
-  const [article, setArticle] = useState([]);
+  const [formData, setformData] = useState({
+    title: "",
+    image: "",
+    description: "",
+    category: "",
+    status: false,
+  });
 
   /* Blocco l'invio del form con l'handler */
-  const HandleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    /* Creo una copia dell'array originale */
-    const AddArticle = [...article, titleArticle];
-    setArticle(AddArticle);
+    setformData((formData) => ({
+      ...formData,
+      [e.target.name]: e.target.value,
+      [e.target.image]: e.target.value,
+      [e.target.description]: e.target.value,
+      [e.target.category]: e.target.value,
+      [e.target.status]: e.target.value,
+    }));
   };
 
   /* Funzione per cancellare l'elemento */
-  const removeArticle = (id) => {
-    const deleteArticle = article.filter((item, index) => {
+  const removeData = (id) => {
+    const deleteData = formData.filter((item, index) => {
       return index !== id;
     });
-    setArticle(deleteArticle);
+    setformData(deleteData);
   };
 
   return (
     <>
       <div className="container">
         <h1>My blog</h1>
-        <form onSubmit={HandleSubmit} className="form-control">
-          <div>
+        <form onSubmit={handleSubmit()} className="row d-inline-flex">
+          <div className="col-3 form-control">
+            {/* Titolo */}
+            <label for="title-form" className="form-label">
+              Titolo
+            </label>
+            <input
+              id="title-form"
+              type="text"
+              value={formData.title}
+              onChange={(e) => {
+                setformData(e.target.value);
+              }}
+            />
+            <button className="btn btn-primary mx-2">Invia</button>
+          </div>
+          <div className="col-3 form-control">
+            {/* Immagine */}
+            <label for="image-form" className="form-label">
+              Immagine
+            </label>
+            <input
+              id="image-form"
+              type="text"
+              value={formData.image}
+              onChange={(e) => {
+                setformData(e.target.value);
+              }}
+            />
+            <button className="btn btn-primary mx-2">Invia</button>
+          </div>
+          <div className="col-3 form-control">
+            {/* Descrizione */}
+            <label for="description-form" className="form-label">
+              Descrizione
+            </label>
+            <input
+              id="description-form"
+              type="text"
+              value={formData.description}
+              onChange={(e) => {
+                setformData(e.target.value);
+              }}
+            />
+            <button className="btn btn-primary mx-2">Invia</button>
+          </div>
+          <div className="col-3 form-control">
+            {/* Categoria */}
+            <label for="description-form" className="form-label">
+              Descrizione
+            </label>
             <input
               type="text"
-              value={titleArticle}
+              value={formData}
               onChange={(e) => {
-                setTitleArticle(e.target.value);
+                setformData(e.target.value);
               }}
             />
             <button className="btn btn-primary mx-2">Invia</button>
@@ -68,19 +125,24 @@ function App() {
         </form>
         <hr />
         {/* Creo una copia con il map e aggiunngo l'elemento al DOM */}
-        <ul>
-          {article.map((name, id) => (
-            <li className="m-3" key={id}>
-              Articolo di {name}
-              <button
-                onClick={() => removeArticle(id)}
-                className="btn btn-danger mx-2"
-              >
-                <i className="fa-solid fa-trash"></i>
-              </button>
-            </li>
-          ))}
-        </ul>
+
+        <div className="row">
+          <div className="col d-flex">
+            <input
+              className="form-control"
+              type="text"
+              onChange={(e) => {
+                setformData(e.target.value);
+              }}
+            />
+            <button
+              onClick={() => removeData(id)}
+              className="btn btn-danger mx-2"
+            >
+              <i className="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
