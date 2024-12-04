@@ -29,25 +29,26 @@ import "./App.css";
 
 function App() {
   /* Uso lo use state per settare l'input  */
-  const [formData, setformData] = useState({
-    title: "",
-    image: "",
-    description: "",
-    category: "",
-    status: false,
-  });
+  const [formData, setformData] = useState("");
+  const [formPost, setFormPost] = useState({});
 
   /* Blocco l'invio del form con l'handler */
   const handleSubmit = (event) => {
     event.preventDefault();
-    setformData((formData) => ({
-      ...formData,
-      [e.target.name]: e.target.value,
+
+    const newItem = {
+      title: formData,
+      image: formData,
+      description: formData,
+      status: false,
+    };
+    setFormPost((formPost) => ({
+      ...formPost,
+      [e.target.title]: e.target.value,
       [e.target.image]: e.target.value,
       [e.target.description]: e.target.value,
-      [e.target.category]: e.target.value,
-      [e.target.status]: e.target.value,
     }));
+    setFormPost(newItem);
   };
 
   /* Funzione per cancellare l'elemento */
@@ -62,14 +63,14 @@ function App() {
     <>
       <div className="container">
         <h1>My blog</h1>
-        <form onSubmit={() => handleSubmit()} className="row d-inline-flex">
+        <form onSubmit={handleSubmit} className="row d-flex">
           <div className="col-3 form-control">
             {/* Titolo */}
-            <label for="title-form" className="form-label">
+            <label className="form-label" htmlFor="text-form">
               Titolo
             </label>
             <input
-              id="title-form"
+              id="text-form"
               type="text"
               value={formData.title}
               onChange={(e) => {
@@ -80,7 +81,7 @@ function App() {
           </div>
           <div className="col-3 form-control">
             {/* Immagine */}
-            <label for="image-form" className="form-label">
+            <label className="form-label" htmlFor="image-form">
               Immagine
             </label>
             <input
@@ -95,7 +96,7 @@ function App() {
           </div>
           <div className="col-3 form-control">
             {/* Descrizione */}
-            <label for="description-form" className="form-label">
+            <label className="form-label" htmlFor="description-form">
               Descrizione
             </label>
             <input
@@ -110,34 +111,33 @@ function App() {
           </div>
           <div className="col-3 form-control">
             {/* Categoria */}
-            <label for="description-form" className="form-label">
-              Descrizione
-            </label>
-            <input
-              type="text"
-              value={formData.category}
-              onChange={(e) => {
-                setformData(e.target.value);
-              }}
-            />
+            <select className="form-select mb-3">
+              <option selected>Open this select menu</option>
+              <option defaultValue="1">One</option>
+              <option defaultValue="2">Two</option>
+              <option defaultValue="3">Three</option>
+            </select>
+
             <button className="btn btn-primary mx-2">Invia</button>
           </div>
         </form>
         <hr />
-        {/* Creo una copia con il map e aggiunngo l'elemento al DOM */}
-
+        {/* Creo una copia con il map e aggiunngo l'elemento al DOM */}*
         <div className="row">
-          <div className="col d-flex">
-            <input className="form-control" type="text" />
-            <input className="form-control" type="text" />
-            <input className="form-control" type="text" />
-
-            <button
-              onClick={() => removeData(id)}
-              className="btn btn-danger mx-2"
-            >
-              <i className="fa-solid fa-trash"></i>
-            </button>
+          <div className="form-control d-flex" key={index}>
+            <div className="card">
+              <div>{image}</div>
+              <div className="card-body">
+                <h2>{title}</h2>
+                <p>{description}</p>
+                <button
+                  onClick={() => removeData(id)}
+                  className="btn btn-danger mx-2"
+                >
+                  <i className="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
