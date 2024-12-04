@@ -62,7 +62,7 @@ function App() {
     <>
       <div className="container">
         <h1>My blog</h1>
-        <form onSubmit={handleSubmit()} className="row d-inline-flex">
+        <form onSubmit={() => handleSubmit()} className="row d-inline-flex">
           <div className="col-3 form-control">
             {/* Titolo */}
             <label for="title-form" className="form-label">
@@ -115,7 +115,7 @@ function App() {
             </label>
             <input
               type="text"
-              value={formData}
+              value={formData.category}
               onChange={(e) => {
                 setformData(e.target.value);
               }}
@@ -128,13 +128,10 @@ function App() {
 
         <div className="row">
           <div className="col d-flex">
-            <input
-              className="form-control"
-              type="text"
-              onChange={(e) => {
-                setformData(e.target.value);
-              }}
-            />
+            <input className="form-control" type="text" />
+            <input className="form-control" type="text" />
+            <input className="form-control" type="text" />
+
             <button
               onClick={() => removeData(id)}
               className="btn btn-danger mx-2"
